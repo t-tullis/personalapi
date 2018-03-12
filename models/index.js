@@ -4,3 +4,5 @@ mongoose.connect( process.env.MONGODB_URI || 3000, function(){
 });
 
 mongoose.Promise = global.Promise;
+
+module.exports.Game = require('./game.js')

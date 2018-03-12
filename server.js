@@ -1,3 +1,4 @@
+//Require Express In App
 var express = require('express'),
     bodyParser = require('body-parser'),
     app = express();
@@ -8,6 +9,8 @@ app.set('views', `${__dirname} views`);
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 
+//Connecting to db models
+var db = require('./models');
 
 //Routes
 
@@ -15,6 +18,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.get('/', function(req,res){
   res.sendFile(__dirname + '/views/index.html');
 });
+
+//getting all video games
+app.get('/api/games', function(req,res){
+  res.sendFile(__dirname + '/views/games.html');
+})
+
 
 //Documented API EndPoints
 app.get('/api', function(req,res){
@@ -32,13 +41,35 @@ app.get('/api', function(req,res){
   },
   {
     'method': 'GET',
-    'path': '/profile',
+    'path': '/api/profile',
     'description': 'Who I am and Where I am from'
+  },
+  {
+    'method': 'GET',
+    'path': '/api/videogames',
+    'description': 'List of all video games I currently play'
+  },
+  {
+    'method': 'POST',
+    'path': '/api/videogames',
+    'description': 'Add a new game'
+  },
+  {
+    'method': 'PUT',
+    'path': '/api/videogames/:id',
+    'description': 'Edit video game entry'
+  },
+  {
+    'method': 'DELETE',
+    'path': '/api/videogames/:id',
+    'description': 'Delete video game'
   }
+  ]
 
-    ]
   });
 });
+
+
 
 
 //Server Setup
