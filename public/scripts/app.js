@@ -7,9 +7,21 @@ $(document).ready(function(){
 
   $.ajax({
     method: 'GET',
-    url: '/api/games',
+    url: '/api/videogames',
     success: handleSuccess,
     error: handleError
+  });
+
+  $('#newGameForm').on('Submit',function(e){
+    e.preventDefault();
+    console.log('new game added/serialized', $(this).serializeArray());
+    $.ajax({
+      method: 'POST',
+      url: '/api/videogames',
+      data: $(this).serializeArray(),
+      success: newGameSuccess,
+      error: newGameError
+    });
   });
 });
 
@@ -21,6 +33,16 @@ $(document).ready(function(){
   function handleError(e){
     console.log('Troubleeeeeee!');
     $('#gameListTarget').text('Games didnt load, Check if server is running');
+  }
+
+  function newGameSuccess(json){
+    $('#newGameForm input').val('');
+    allGames.push(json);
+    render();
+  }
+
+  function newGameError(){
+    console.log('new game wasnt added. ERROR!')
   }
 
   function render(){

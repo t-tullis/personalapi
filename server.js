@@ -16,14 +16,18 @@ var db = require('./models');
 
 //Root Route localhost:3000
 app.get('/', function(req,res){
+  res.send('HELLO WORLD!');
+});
+
+//profile route
+app.get('/api/profile', function(req,res){
   res.sendFile(__dirname + '/views/index.html');
 });
 
 //getting all video games
-app.get('/api/games', function(req,res){
+app.get('/api/videogames', function(req,res){
   res.sendFile(__dirname + '/views/games.html');
 })
-
 
 //Documented API EndPoints
 app.get('/api', function(req,res){
@@ -41,7 +45,7 @@ app.get('/api', function(req,res){
   },
   {
     'method': 'GET',
-    'path': '/api/profile',
+    'path': '/',
     'description': 'Who I am and Where I am from'
   },
   {
