@@ -12,7 +12,7 @@ $(document).ready(function(){
     error: handleError
   });
 
-  $('#newGameForm').on('Submit',function(e){
+  $('#newGameForm').on('submit',function(e){
     e.preventDefault();
     $.ajax({
       method: 'POST',
@@ -23,15 +23,15 @@ $(document).ready(function(){
     });
   });
 
-  $gamesList.on('click', '.deleteBtn', function() {
-    console.log('clicked delete button to', '/api/videogames/'+$(this).attr('data-id'));
-    $.ajax({
-      method: 'DELETE',
-      url: '/api/videogames/'+$(this).attr('data-id'),
-      success: deleteGameSuccess,
-      error: deleteGameError
-    });
-  });
+  // $gamesList.on('click', '.deleteBtn', function() {
+  //   console.log('clicked delete button to', '/api/videogames/'+$(this).attr('data-id'));
+  //   $.ajax({
+  //     method: 'DELETE',
+  //     url: '/api/videogames/'+$(this).attr('data-id'),
+  //     success: deleteGameSuccess,
+  //     error: deleteGameError
+  //   });
+  // });
 
 });
 
@@ -67,7 +67,7 @@ function getGameHtml(game) {
 
   function handleError(e){
     console.log('Troubleeeeeee!');
-    $('#gameListTarget').text('Games didnt load, Check if server is running');
+    $('#gamesListTarget').text('Games didnt load, Check if server');
   }
 
   function newGameSuccess(json){

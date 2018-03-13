@@ -55,6 +55,19 @@ app.get('/api/videogames', function(req,res){
   res.json(games);
 }); 
 
+// get a game
+app.get('/api/videogames/:id', function (req, res) {
+  // find one book by its id
+  console.log('games show', req.params);
+  for(var i=0; i < games.length; i++) {
+    if (games[i]._id === req.params.id) {
+      res.json(games[i]);
+      break;
+    }
+  }
+});
+
+
 // Create new game
 app.post('/api/videogames', function (req, res) {
  // create new book with form data (`req.body`)
