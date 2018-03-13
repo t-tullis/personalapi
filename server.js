@@ -77,7 +77,7 @@ app.get('/api/profile', function(req,res){
     'endpoints':[
     {
     'method': 'GET',
-    'path': '/api',
+    'path': '/api/profile',
     'description': 'Describes all available endpoints'
   },
   {
