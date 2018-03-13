@@ -3,7 +3,7 @@ var $gamesList;
 var allGames = [];
 
 $(document).ready(function(){
-  $gamesList = $('#gameListTarget')
+  $gamesList = $('#gameListTarget');
 
   $.ajax({
     method: 'GET',
@@ -14,16 +14,51 @@ $(document).ready(function(){
 
   $('#newGameForm').on('Submit',function(e){
     e.preventDefault();
-    console.log('new game added/serialized', $(this).serializeArray());
     $.ajax({
       method: 'POST',
       url: '/api/videogames',
-      data: $(this).serializeArray(),
+      data: $(this).serialize(),
       success: newGameSuccess,
       error: newGameError
     });
   });
+
+  $gamesList.on('click', '.deleteBtn', function() {
+    console.log('clicked delete button to', '/api/videogames/'+$(this).attr('data-id'));
+    $.ajax({
+      method: 'DELETE',
+      url: '/api/videogames/'+$(this).attr('data-id'),
+      success: deleteGameSuccess,
+      error: deleteGameError
+    });
+  });
+
 });
+
+function getGameHtml(game) {
+  return `<hr>
+          <p>
+            <b>Title: ${game.title}</b>
+            <br>
+            Genre:${game.genre}
+            <br>
+            Rating:${game.rating}
+            <button type="button" name="button" class="deleteBtn btn btn-danger pull-right" data-id=${game._id}>Delete</button>
+          </p>`;  
+  }
+
+  function getAllGamesHtml(games){
+    return games.map(getGameHtml).join('');
+  }
+  
+  function render(){
+    $gamesList.empty();
+
+    var gamesHtml = getAllGamesHtml(allGames);
+
+    $gamesList.append(gamesHtml)
+
+  };
 
   function handleSuccess(json){
     allGames = json;
@@ -45,6 +80,19 @@ $(document).ready(function(){
     console.log('new game wasnt added. ERROR!')
   }
 
-  function render(){
-    $gamesList.empty();
+  function deleteGameSuccess(json) {
+  var game = json;
+  console.log(json);
+  var gameId = game._id;
+  console.log('deleted game', gameId);
+
+  for(var i = 0; i < allGames.length; i++) {
+    if(allGames[i]._id === gameId) {
+      allGames.splice(i, 1);
+      break;  
+    }
   }
+  render();
+}
+
+

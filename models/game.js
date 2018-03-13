@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema
+var Schema = mongoose.Schema;
 
-var gameSchema = new Schema ({
+var GameSchema = new Schema ({
   title: String,
   genre: String,
-  rating: String,
+  rating: String
 });
 
-var Game = mongoose.model('Game', gameSchema)
+var Game = mongoose.model('Game', GameSchema)
 
 module.exports = Game;
